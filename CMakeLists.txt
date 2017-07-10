@@ -68,11 +68,7 @@ include_directories(
 
 
 add_executable(open_son src/open_son.cpp)
-<<<<<<< HEAD
 add_executable(connect_sonar src/connect_sonar.cpp)
-
-=======
->>>>>>> 9722cbba9574fc4cfa099b995af8822aff401e6f
 
 target_link_libraries(open_son
   ${BLUEVIEW_SDK_LIBS}
@@ -81,7 +77,6 @@ target_link_libraries(open_son
   opencv_highgui
 )
 
-<<<<<<< HEAD
 target_link_libraries(connect_sonar
   ${BLUEVIEW_SDK_LIBS}
   ${catkin_LIBRARIES} 
@@ -91,6 +86,4 @@ target_link_libraries(connect_sonar
 
 add_dependencies(open_son test_publish_generate_messages_cpp)
 add_dependencies(connect_sonar test_publish_generate_messages_cpp)
-=======
-add_dependencies(open_son test_publish_generate_messages_cpp)
->>>>>>> 9722cbba9574fc4cfa099b995af8822aff401e6f
+

@@ -27,11 +27,8 @@ good_new, good_old = [], []
 
 r_out, theta_out = [], []
 
-<<<<<<< HEAD
 r_thres = 10
 
-=======
->>>>>>> 9722cbba9574fc4cfa099b995af8822aff401e6f
 r_met = 0
 status = False
 theta_met = 0
@@ -44,13 +41,8 @@ def CornerDetect(Img_gray):
                            qualityLevel = 0.3,
                            minDistance  = 10,
                            blockSize    = 7 )
-<<<<<<< HEAD
 	#blur = cv2.medianBlur(Img_gray, 5)
 	rth, Img_gray_th = cv2.threshold(Img_gray, 70, 255, 0)
-=======
-	blur = cv2.medianBlur(Img_gray, 5)
-	rth, Img_gray_th = cv2.threshold(blur, 25, 255, 0)
->>>>>>> 9722cbba9574fc4cfa099b995af8822aff401e6f
 	p0 = cv2.goodFeaturesToTrack(Img_gray_th, mask=None, **feature_params)
 	"""for i in range (0,len(p0)):
 		cv2.circle(Img_frame, (p0[i][0][0], p0[i][0][1]), 5, (142, 164, 255), -1)
@@ -68,11 +60,7 @@ def OpticalFlow(Img_gray):
 	return p1, st
 
 def FindObject(Img_gray):
-<<<<<<< HEAD
 	global count, r_met, r_thres, theta_met, status, mask, new_pos, old_pos
-=======
-	global count, r_met, theta_met, status, mask, new_pos, old_pos
->>>>>>> 9722cbba9574fc4cfa099b995af8822aff401e6f
 	global r_out, theta_out
 	r_met = 0 
 	count_newLast, index = 0, 0
@@ -106,18 +94,11 @@ def FindObject(Img_gray):
 				r_met, theta_met = meters(Obj_x, Obj_y, x_ref, y_ref)
 				theta_met = theta_met + 90
 				r_met, theta_met = int(round(r_met)), int(round(theta_met))
-<<<<<<< HEAD
 				if r_met <= r_thres:
 					print "Estimate # %d frame Object # %d: R = %.2f meters, Theta = %.2f" % (count, j + 1, r_met, theta_met)
 					r_out.append(r_met)
 					theta_out.append(theta_met)
 					cv2.circle(Img_sh, (Obj_x, Obj_y), 5, (102, 255, 204), -1)
-=======
-				print "Estimate # %d frame Object # %d: R = %.2f meters, Theta = %.2f" % (count, j + 1, r_met, theta_met)
-				r_out.append(r_met)
-				theta_out.append(theta_met)
-				cv2.circle(Img_sh, (Obj_x, Obj_y), 5, (102, 255, 204), -1)
->>>>>>> 9722cbba9574fc4cfa099b995af8822aff401e6f
 				pre_est_x, pre_est_y = Obj_x, Obj_y
 				pubIm(Img_sh)
 		status = True
@@ -137,10 +118,7 @@ def pubIm(im):
 def meters(x,y,x_ref, y_ref):
 	global r_met, theta_met, status
 	pix_met = float(20/y_ref)
-<<<<<<< HEAD
 	print pix_met
-=======
->>>>>>> 9722cbba9574fc4cfa099b995af8822aff401e6f
 	y_met, x_met = y*pix_met, x*pix_met
 	x_ref, y_ref = x_ref*pix_met, y_ref*pix_met
 	r = np.sqrt(np.power(x_met - x_ref, 2) + np.power(y_met - y_ref, 2))
@@ -197,11 +175,7 @@ def Process():
 def image_callback(ros_data):
 	global Img_frame, width, height, index
 	index += 1
-<<<<<<< HEAD
 	#print "index = %s" %index
-=======
-	print "index = %s" %index
->>>>>>> 9722cbba9574fc4cfa099b995af8822aff401e6f
 	try:
 		Img_frame = cv2.resize(bridge.imgmsg_to_cv2(ros_data, "bgr8"),(width, height))
 	except CvBridgeError, e:
