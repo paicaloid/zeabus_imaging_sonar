@@ -69,6 +69,7 @@ include_directories(
 
 add_executable(open_son src/open_son.cpp)
 add_executable(connect_sonar src/connect_sonar.cpp)
+add_executable(record_sonar src/record_son.cpp)
 
 target_link_libraries(open_son
   ${BLUEVIEW_SDK_LIBS}
@@ -84,6 +85,14 @@ target_link_libraries(connect_sonar
   opencv_highgui
 )
 
+target_link_libraries(record_sonar
+  ${BLUEVIEW_SDK_LIBS}
+  ${catkin_LIBRARIES} 
+  ${OpenCV_LIBRARIES}
+  opencv_highgui
+)
+
 add_dependencies(open_son test_publish_generate_messages_cpp)
 add_dependencies(connect_sonar test_publish_generate_messages_cpp)
+add_dependencies(record_sonar test_publish_generate_messages_cpp)
 
