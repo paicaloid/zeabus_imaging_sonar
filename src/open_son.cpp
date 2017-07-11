@@ -13,11 +13,12 @@
 
 int pos = 0;
 int intensity = 0;
-double int2double = 0;
 
 int thres = 0 ;
 double maxval = 255 ;
 int thres_type = CV_THRESH_BINARY ;
+
+int interpolation = CV_INTER_LINEAR ;
 
 BVTSDK::ImageGenerator img;
 BVTSDK::ColorMapper map;
@@ -53,7 +54,6 @@ int main(int argc, char** argv){
 	printf("SDK Ready!!!\n") ;
 	BVTSDK::Sonar sonar;
 	sonar.Open("FILE" , fullPath);
-	//sonar.Open("NET" , "192.168.1.45");
 
 	BVTSDK::Head head = sonar.GetHead(0);
 	float start_range = 1 ;
@@ -62,7 +62,9 @@ int main(int argc, char** argv){
 
 	BVTSDK::Ping ping = head.GetPing(0);
 	
-	int i = head.GetPingCount();
+	int PingCount = head.GetPingCount();
+
+	printf("Sonar Ping = %d\n",PingCount);
 
 	img.SetHead(head);
 	//BVTSDK::ColorMapper map;
@@ -92,6 +94,7 @@ int main(int argc, char** argv){
 
 	int p = 1;
 	int k = 0;
+	int j  ;
 
 	printf("Initial Publisher for /imaging_sonar\n") ;
 	printf("Pause video by pressing : P\n") ;
@@ -144,7 +147,6 @@ int main(int argc, char** argv){
 		threshold(binary_img, binary_img,thres, maxval, cv::THRESH_BINARY );
 		
 		
-		
 		cv::imshow("RawImage", color_img);
 		cv::imshow("BinaryThresholding", binary_img) ;
         k = cv::waitKey(30);
@@ -153,7 +155,17 @@ int main(int argc, char** argv){
     	else if (k == 112){
     		p = !p;
     	}
-    	i--;
+
+		int row = color_img.rows ;
+		int col = color_img.cols ;
+		printf("Row : %d, Column : %d\n",row, col) ;
+
+		//resize image
+		cv::resize(color_img, color_img, cv::Size(), 0.5, 0.5, interpolation) ;
+
+		int roww = color_img.rows ;
+		int coll = color_img.cols ;
+		printf("Row : %d, Column : %d\n",roww, coll) ;
 
 		//printf("Sending Image\n") ;
 		sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "mono8", color_img).toImageMsg();
