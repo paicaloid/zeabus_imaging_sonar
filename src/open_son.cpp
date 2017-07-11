@@ -94,7 +94,7 @@ int main(int argc, char** argv){
 
 	int p = 1;
 	int k = 0;
-	int j  ;
+	int j = 0 ;
 
 	printf("Initial Publisher for /imaging_sonar\n") ;
 	printf("Pause video by pressing : P\n") ;
@@ -158,20 +158,29 @@ int main(int argc, char** argv){
 
 		int row = color_img.rows ;
 		int col = color_img.cols ;
-		printf("Row : %d, Column : %d\n",row, col) ;
+		//printf("Row : %d, Column : %d\n",row, col) ;
 
 		//resize image
 		cv::resize(color_img, color_img, cv::Size(), 0.5, 0.5, interpolation) ;
 
 		int roww = color_img.rows ;
 		int coll = color_img.cols ;
-		printf("Row : %d, Column : %d\n",roww, coll) ;
+		//printf("Row : %d, Column : %d\n",roww, coll) ;
+
+		j++ ;
+		if(j == PingCount)
+		{
+			printf("\n\n\n\n\n\n ### Finish ### \n\n\n\n\n\n") ;
+			j = 0 ;
+		}
 
 		//printf("Sending Image\n") ;
 		sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "mono8", color_img).toImageMsg();
 		pub.publish(msg);
 		ros::spinOnce();
 		loop_rate.sleep();
+
+		
 
 	}
 }
