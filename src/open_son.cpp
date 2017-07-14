@@ -39,7 +39,7 @@ int main(int argc, char** argv){
 	std::string rootPath = "/home/paicaloid/bvtsdk/";
 	std::string dataPath = rootPath + "data/";
 	std::string mapperPath = rootPath + "colormaps/bone.cmap";
-	std::string fileName = "10_Jul_17_bouy3.son";
+	std::string fileName = "9_Jul_17_bin2.son";
 	std::string fullPath = dataPath + fileName;
 
 	pos = 1530;
@@ -48,9 +48,11 @@ int main(int argc, char** argv){
 
 	cv::namedWindow("RawImage" , cv::WINDOW_NORMAL);
 	cv::namedWindow("BinaryThresholding" , cv::WINDOW_NORMAL);
+	cv::namedWindow("RThetaImage", cv::WINDOW_NORMAL );
 	cv::createTrackbar("Sound Speed" , "RawImage" , &pos , 2000 , SpeedChange);
 	cv::createTrackbar("Threshold" , "BinaryThresholding" , &thres , 255 , ThresholdChange);
-	
+	cv::createTrackbar("Sound Speed" , "RThetaImage" , &pos , 2000 , SpeedChange);
+
 	printf("SDK Ready!!!\n") ;
 	BVTSDK::Sonar sonar;
 	sonar.Open("FILE" , fullPath);
@@ -114,7 +116,9 @@ int main(int argc, char** argv){
 
 		ping = head.GetPing(-1);
 		BVTSDK::MagImage mag = img.GetImageXY(ping);
+		BVTSDK::MagImage rth = img.GetImageRTheta(ping);
 		BVTSDK::ColorImage cimg = map.MapImage(mag);
+		BVTSDK::ColorImage cimgrth = map.MapImage(rth) ;
 
 		float ClipThres = 1.0 ;
 		img.SetClippingThreshold(ClipThres) ;
@@ -127,10 +131,15 @@ int main(int argc, char** argv){
 		int height = cimg.GetHeight();
 		int width = cimg.GetWidth();
 
+		int height_rth = cimgrth.GetHeight();
+		int width_rth = cimgrth.GetWidth();
+
 		//printf("Height : %d, Width : %d\n",height, width) ;
 
 		cv::Mat color_img(height , width , CV_8UC4 , cimg.GetBits());
 		cv::Mat binary_img(height , width , CV_8UC4 , cimg.GetBits());
+		cv::Mat color_rth(height_rth , width_rth , CV_8UC4 , cimgrth.GetBits());
+
 		// Pause by pressing 'P'
 	 	while(!p){
 	 		k = cv::waitKey(30);
@@ -149,6 +158,7 @@ int main(int argc, char** argv){
 		
 		cv::imshow("RawImage", color_img);
 		cv::imshow("BinaryThresholding", binary_img) ;
+		cv::imshow("RThetaImage", color_rth) ;
         k = cv::waitKey(30);
     	if( k == 27 )
     		break;
