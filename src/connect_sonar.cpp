@@ -20,7 +20,7 @@ double maxval = 255 ;
 int thres_type = CV_THRESH_BINARY ;
 
 float start_range = 1 ;
-float stop_range = 20 ;
+float stop_range = 45 ;
 
 BVTSDK::ImageGenerator img;
 BVTSDK::ColorMapper map;
@@ -39,7 +39,7 @@ int main(int argc, char** argv){
     /// Setup Path ///
 	std::string rootPath = "/home/paicaloid/bvtsdk/";
 	//std::string dataPath = rootPath + "data/";
-	std::string mapperPath = rootPath + "colormaps/bone.cmap";
+	std::string mapperPath = rootPath + "colormaps/jet.cmap";
 	std::string fileName = "test_001.son";
 	std::string storePath = "/home/paicaloid/catkin_ws/src/cpp_sonar/data" ;
 	std::string fullPath = storePath + fileName;
@@ -104,7 +104,7 @@ int main(int argc, char** argv){
 	    	}
 		}
 
-		cvtColor(color_img, color_img, cv::COLOR_RGB2GRAY);
+		//cvtColor(color_img, color_img, cv::COLOR_RGB2GRAY);
 		cvtColor(binary_img, binary_img, cv::COLOR_RGB2GRAY);
 		threshold(binary_img, binary_img,thres, maxval, cv::THRESH_BINARY );
 

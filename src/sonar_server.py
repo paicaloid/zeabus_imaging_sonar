@@ -6,8 +6,8 @@ import numpy as np
 import roslib
 import rospy
 import math
-from sonar.msg import sonar_msg
-from sonar.srv import sonar_srv
+from zeabus_imaging_sonar.msg import sonar_msg
+from zeabus_imaging_sonar.srv import sonar_srv
 sonar_image = None
 
 def server(start):

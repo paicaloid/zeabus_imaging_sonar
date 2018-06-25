@@ -16,7 +16,7 @@ int main(int argc, char** argv){
     /// Setup Path ///
 	std::string rootPath = "/home/paicaloid/bvtsdk/";
 	std::string dataPath = rootPath + "data/";
-	std::string fileName = "test_record_002.son";
+	std::string fileName = "17_Jul_17_14.son";
 	std::string fullPath = dataPath + fileName;
 
     printf("SDK Ready!!!\n") ;
@@ -44,15 +44,15 @@ int main(int argc, char** argv){
     printf("Create BVTSDK:Head for record : Success\n") ;
 
     int ping_num = 0 ;
-    int max_ping = 50 ;
+    int max_ping = 150 ;
 
     BVTSDK::Ping ping = head.GetPing(0);
     printf("Ready for record\n") ;
     for(ping_num = 0; ping_num < max_ping; ping_num++)
     {
-        ping = head.GetPing(-1);
+        ping = head.GetPing(-1); //DECIDE ping_num < 0 : save _____ ping_num >= 0 : open
 
-        file_head.PutPing(ping) ;
+        file_head.PutPing(ping) ; //write ping to file
 
         printf("Getting ping %d \n", ping_num);
     }

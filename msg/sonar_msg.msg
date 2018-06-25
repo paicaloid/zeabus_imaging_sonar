@@ -1,3 +1,3 @@
 uint8[] r
-uint8[] theta
+float32[] theta
 bool status

@@ -11,8 +11,8 @@ from sensor_msgs.msg import CompressedImage
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
-from sonar.msg import sonar_msg
-from sonar.srv import sonar_srv
+from zeabus_imaging_sonar.msg import sonar_msg
+from zeabus_imaging_sonar.srv import sonar_srv
 
 # Instantiate CvBridge
 bridge = CvBridge()
@@ -172,6 +172,23 @@ def Process():
 	cv2.waitKey(1)
 	return res
 	
+def Convolution(Img_gray):
+
+	kernel = np.ones((7,7))
+	#print kernel
+	for i in range (0,3):
+		for j in range (0,3):
+			kernel[i+2][j+2] = 0
+
+	# print kernel
+	rth, Img_conv = cv2.threshold(Img_gray, 70, 255, 0)
+	Img_conv = cv2.filter2D(Img_conv,-1,kernel/49)
+	rth, Img_conv = cv2.threshold(Img_conv, 70, 255, 0)
+	#cv2.imshow('SAM', Img_frame)
+	#cv2.waitKey(30)
+
+	return Img_conv
+
 def image_callback(ros_data):
 	global Img_frame, width, height, index
 	index += 1
